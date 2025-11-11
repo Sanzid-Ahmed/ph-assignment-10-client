@@ -5,6 +5,8 @@ import Home from "../components/home/Home";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import PrivateRoute from "./PrivateRoute";
+import AllJobs from "../components/jobs/AllJobs";
+import AddJob from "../components/jobs/AddJob";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +23,13 @@ const router = createBrowserRouter([
         path: "/addJob",
         element: (
           <PrivateRoute>
-            <h1>Add Job Page (private)</h1>
+            <AddJob />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/allJobs",
+        element: <AllJobs />, // public page
       },
       {
         path: "/my-accepted-tasks",
