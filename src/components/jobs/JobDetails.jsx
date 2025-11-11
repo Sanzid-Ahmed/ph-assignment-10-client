@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 
 const JobDetails = () => {
-  const { id } = useParams(); // Get job ID from the route parameter
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // ✅ Get current logged-in user from Firebase
+  const auth = getAuth();
+  const currentUser = auth.currentUser; // This is a Firebase user object
+  const currentUserEmail = currentUser?.email;
+
   useEffect(() => {
-    // Fetch single job details from backend
     fetch(`http://localhost:3000/allJobs/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -20,37 +26,79 @@ const JobDetails = () => {
       });
   }, [id]);
 
-  if (loading) {
-    return <p className="text-center mt-10 text-gray-600">Loading job details...</p>;
-  }
+  const handleAccept = async () => {
+    if (!currentUserEmail) {
+      alert("❌ You must be logged in to accept this job.");
+      navigate("/login");
+      return;
+    }
 
-  if (!job) {
+    try {
+      const response = await fetch(`http://localhost:3000/updateJob/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ acceptedByEmail: currentUserEmail }),
+      });
+
+      if (response.ok) {
+        alert("✅ Job accepted successfully!");
+        navigate("/my-accepted-tasks");
+      } else {
+        alert("❌ Failed to accept job.");
+      }
+    } catch (err) {
+      console.error("Accept job error:", err);
+      alert("❌ Something went wrong!");
+    }
+  };
+
+  if (loading)
+    return <p className="text-center mt-10 text-gray-600">Loading job details...</p>;
+  if (!job)
     return <p className="text-center mt-10 text-red-500">Job not found!</p>;
-  }
+
+  // ✅ Check if current Firebase user is the poster
+  const isPoster = currentUserEmail === job.userEmail;
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md mt-8">
-      <h2 className="text-3xl font-bold mb-3 text-gray-800">{job.title}</h2>
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-md mt-8">
+      {job.coverImage && (
+        <img
+          src={job.coverImage}
+          alt={job.title}
+          className="w-full h-64 object-cover rounded mb-4"
+        />
+      )}
+      <h2 className="text-3xl font-bold mb-3">{job.title}</h2>
       <p className="text-gray-700 mb-2">
         <span className="font-semibold">Category:</span> {job.category}
       </p>
       <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Salary:</span> {job.salary}
+        <span className="font-semibold">Posted By:</span> {job.postedBy}
       </p>
       <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Deadline:</span> {job.deadline}
+        <span className="font-semibold">Salary:</span> {job.salary || "Negotiable"}
       </p>
       <p className="text-gray-700 mb-6 leading-relaxed">
-        <span className="font-semibold">Description:</span> {job.description}
+        <span className="font-semibold">Description:</span> {job.summary || job.description}
       </p>
 
       <div className="flex justify-between">
-        <Link
-          to={`/updateJob/${job._id}`}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-        >
-          Edit Job
-        </Link>
+        {isPoster ? (
+          <Link
+            to={`/updateJob/${job._id}`}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+          >
+            Update Job
+          </Link>
+        ) : (
+          <button
+            onClick={handleAccept}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+          >
+            Accept Job
+          </button>
+        )}
 
         <Link
           to="/allJobs"

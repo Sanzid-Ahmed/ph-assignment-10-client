@@ -1,11 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getAuth } from "firebase/auth";
 
 const AddJob = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const auth = getAuth();
+    setUser(auth.currentUser);
+  }, []);
+
   const [job, setJob] = useState({
     title: "",
-    company: "",
+    postedBy: "",
+    category: "",
+    summary: "",
     description: "",
+    coverImage: "",
     salary: "",
+    userEmail: "",
   });
 
   const handleChange = (e) => {
@@ -16,23 +28,52 @@ const AddJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:3000/add-job", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(job),
-    });
+    if (!user) {
+      alert("❌ You must be logged in to add a job.");
+      return;
+    }
 
-    if (response.ok) {
-      alert("✅ Job added successfully!");
-      setJob({ title: "", company: "", description: "", salary: "" });
-    } else {
-      alert("❌ Failed to add job");
+    const jobData = {
+      ...job,
+      postedBy: user.displayName || "Anonymous",
+      userEmail: user.email,
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/addJob", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jobData),
+      });
+
+      if (response.ok) {
+        alert("✅ Job added successfully!");
+        setJob({
+          title: "",
+          postedBy: "",
+          category: "",
+          summary: "",
+          description: "",
+          coverImage: "",
+          salary: "",
+          userEmail: "",
+        });
+      } else {
+        alert("❌ Failed to add job");
+      }
+    } catch (err) {
+      console.error("Add job error:", err);
+      alert("❌ Something went wrong!");
     }
   };
 
+  if (!user) return <p>Loading user info...</p>;
+
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
-      <h2 className="text-2xl font-bold mb-5 text-center text-gray-700">Add New Job</h2>
+      <h2 className="text-2xl font-bold mb-5 text-center text-gray-700">
+        Add New Job
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
@@ -43,14 +84,31 @@ const AddJob = () => {
           className="w-full border p-2 rounded"
           required
         />
-        <input
-          name="company"
-          value={job.company}
+
+        <select
+          name="category"
+          value={job.category}
           onChange={handleChange}
-          placeholder="Company Name"
+          className="w-full border p-2 rounded"
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Digital Marketing">Digital Marketing</option>
+          <option value="Graphics Designing">Graphics Designing</option>
+          <option value="Content Writing">Content Writing</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <input
+          name="summary"
+          value={job.summary}
+          onChange={handleChange}
+          placeholder="Short Summary"
           className="w-full border p-2 rounded"
           required
         />
+
         <textarea
           name="description"
           value={job.description}
@@ -59,6 +117,16 @@ const AddJob = () => {
           className="w-full border p-2 rounded"
           required
         />
+
+        <input
+          name="coverImage"
+          value={job.coverImage}
+          onChange={handleChange}
+          placeholder="Cover Image URL"
+          className="w-full border p-2 rounded"
+          required
+        />
+
         <input
           name="salary"
           value={job.salary}

@@ -1,53 +1,87 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // for navigation
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
   // 🟢 Fetch all jobs from backend
   useEffect(() => {
-    fetch("http://localhost:3000/all-jobs")
+    fetch("http://localhost:3000/allJobs")
       .then((res) => res.json())
       .then((data) => setJobs(data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Failed to fetch jobs:", err))
+      .finally(() => setLoading(false));
   }, []);
 
   // 🟠 Delete job
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this job?")) return;
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
 
-    const response = await fetch(`http://localhost:3000/delete-job/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const response = await fetch(`http://localhost:3000/deleteJob/${id}`, {
+        method: "DELETE",
+      });
 
-    if (response.ok) {
-      alert("✅ Job deleted successfully!");
-      setJobs(jobs.filter((job) => job._id !== id));
+      if (response.ok) {
+        alert("✅ Job deleted successfully!");
+        setJobs(jobs.filter((job) => job._id !== id));
+      } else {
+        alert("❌ Failed to delete job");
+      }
+    } catch (err) {
+      console.error("Delete job error:", err);
+      alert("❌ Something went wrong!");
     }
   };
 
+  if (loading) {
+    return <p className="text-center mt-10">Loading jobs...</p>;
+  }
+
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="max-w-6xl mx-auto mt-10">
       <h2 className="text-2xl font-bold text-center mb-6">All Jobs</h2>
 
       {jobs.length === 0 ? (
-        <p className="text-center">No jobs found.</p>
+        <p className="text-center text-gray-600">No jobs found.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.map((job) => (
             <div
               key={job._id}
-              className="border rounded p-4 flex justify-between items-center"
+              className="border rounded p-4 flex flex-col justify-between shadow hover:shadow-lg transition"
             >
-              <div>
-                <h3 className="font-semibold text-lg">{job.title}</h3>
-                <p className="text-gray-600">{job.company}</p>
-                <p className="text-gray-500">{job.salary}</p>
-              </div>
+              {job.coverImage && (
+                <img
+                  src={job.coverImage}
+                  alt={job.title}
+                  className="w-full h-40 object-cover rounded mb-3"
+                />
+              )}
+              <h3 className="font-semibold text-lg">{job.title}</h3>
+              <p className="text-gray-600">
+                <strong>Category:</strong> {job.category || "N/A"}
+              </p>
+              <p className="text-gray-600">
+                <strong>Posted By:</strong> {job.postedBy || "N/A"}
+              </p>
+              <p className="text-gray-500 mb-3">
+                {job.summary && job.summary.length > 80
+                  ? job.summary.substring(0, 80) + "..."
+                  : job.summary}
+              </p>
 
-              <div className="space-x-2">
+              <div className="mt-auto flex justify-between items-center">
+                <Link
+                  to={`/allJobs/${job._id}`}
+                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                >
+                  View Details
+                </Link>
                 <button
                   onClick={() => handleDelete(job._id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
                 >
                   Delete
                 </button>
