@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import { ToastContainer } from "react-toastify"; // make sure you installed react-toastify
+import { ToastContainer } from "react-toastify";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext); // get user and logOut from context
+  const { user, logOut } = useContext(AuthContext);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleLogOut = () => {
@@ -90,19 +90,18 @@ const Navbar = () => {
         {user ? (
           <button
             onClick={handleLogOut}
-            className="btn border-0 bg-gradient-to-r from-[#f0913f] to-pink-300 rounded-3xl"
+            className="btn border-0 rounded-3xl font-bold"
           >
             LogOut
           </button>
         ) : (
           <Link
             to="/login"
-            className="btn border-0 bg-gradient-to-r from-[#f0913f] to-pink-300 rounded-3xl"
+            className="btn border-0 rounded-3xl font-bold"
           >
             Login
           </Link>
         )}
-
         <ToastContainer />
       </div>
     </div>
