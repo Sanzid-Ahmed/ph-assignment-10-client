@@ -10,9 +10,10 @@ const JobDetails = () => {
 
   // ✅ Get current logged-in user from Firebase
   const auth = getAuth();
-  const currentUser = auth.currentUser; // This is a Firebase user object
+  const currentUser = auth.currentUser;
   const currentUserEmail = currentUser?.email;
 
+  // 🟢 Fetch job details
   useEffect(() => {
     fetch(`http://localhost:3000/allJobs/${id}`)
       .then((res) => res.json())
@@ -26,6 +27,7 @@ const JobDetails = () => {
       });
   }, [id]);
 
+  // 🟣 Handle Accept Job
   const handleAccept = async () => {
     if (!currentUserEmail) {
       alert("❌ You must be logged in to accept this job.");
@@ -57,8 +59,11 @@ const JobDetails = () => {
   if (!job)
     return <p className="text-center mt-10 text-red-500">Job not found!</p>;
 
-  // ✅ Check if current Firebase user is the poster
+  // ✅ Check conditions
   const isPoster = currentUserEmail === job.userEmail;
+  const isAcceptedByCurrentUser = job.acceptedByEmail === currentUserEmail;
+  const isAcceptedBySomeoneElse =
+    job.acceptedByEmail && job.acceptedByEmail !== currentUserEmail;
 
   return (
     <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-md mt-8">
@@ -77,21 +82,42 @@ const JobDetails = () => {
         <span className="font-semibold">Posted By:</span> {job.postedBy}
       </p>
       <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Salary:</span> {job.salary || "Negotiable"}
+        <span className="font-semibold">Salary:</span>{" "}
+        {job.salary || "Negotiable"}
       </p>
       <p className="text-gray-700 mb-6 leading-relaxed">
-        <span className="font-semibold">Description:</span> {job.summary || job.description}
+        <span className="font-semibold">Description:</span>{" "}
+        {job.summary || job.description}
       </p>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
+        {/* 🟢 Button Logic */}
         {isPoster ? (
+          // Poster can update
           <Link
             to={`/updateJob/${job._id}`}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
           >
             Update Job
           </Link>
+        ) : isAcceptedByCurrentUser ? (
+          // Current user already accepted → show disabled button
+          <button
+            disabled
+            className="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed"
+          >
+            ✅ Accepted
+          </button>
+        ) : isAcceptedBySomeoneElse ? (
+          // Another user accepted → disable button
+          <button
+            disabled
+            className="bg-red-400 text-white px-4 py-2 rounded cursor-not-allowed"
+          >
+            Already Taken
+          </button>
         ) : (
+          // Not accepted yet → show Accept Job button
           <button
             onClick={handleAccept}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
@@ -100,6 +126,7 @@ const JobDetails = () => {
           </button>
         )}
 
+        {/* Back Button */}
         <Link
           to="/allJobs"
           className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
