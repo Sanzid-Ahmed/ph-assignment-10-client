@@ -3,7 +3,6 @@ import Banner from './Banner/Banner';
 import TopCategories from './TopCategories/TopCategories';
 import AboutPlatform from './AboutPlatform/AboutPlatform';
 import LatestJobs from './LatestJobs/LatestJobs';
-import Footer from './Footer/footer';
 
 const Home = () => {
     return (
@@ -20,9 +19,6 @@ const Home = () => {
                     <AboutPlatform></AboutPlatform>
                 </section>
             </main>
-            <Footer>
-                <Footer></Footer>
-            </Footer>
         </div>
     );
 };
