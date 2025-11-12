@@ -16,12 +16,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     children: [
-      // Home page is public
       {
         index: true,
         element: <Home />,
       },
-      // Private pages
       {
         path: "/addJob",
         element: (
@@ -51,7 +49,6 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      // Auth pages
       {
         path: "/login",
         element: <Login />,

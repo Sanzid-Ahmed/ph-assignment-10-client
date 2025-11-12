@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // for navigation
+import { Link } from "react-router-dom";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
-  // 🟢 Fetch all jobs from backend
   useEffect(() => {
     fetch("http://localhost:3000/allJobs")
       .then((res) => res.json())
@@ -14,7 +13,6 @@ const AllJobs = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // 🟠 Delete job
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../provider/AuthProvider"; // if you have context
+import { AuthContext } from "../../provider/AuthProvider";
 import { Link } from "react-router-dom";
 
 const MyAddedJobs = () => {
-  const { user } = useContext(AuthContext); // assuming user contains email or id
+  const { user } = useContext(AuthContext); 
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 

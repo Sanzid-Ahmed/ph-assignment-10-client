@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateJob = () => {
-  const { id } = useParams(); // Get job ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState({
     title: "",
@@ -13,7 +13,6 @@ const UpdateJob = () => {
   });
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch job data to edit
   useEffect(() => {
     fetch(`http://localhost:3000/allJobs/${id}`)
       .then((res) => res.json())
@@ -27,13 +26,11 @@ const UpdateJob = () => {
       });
   }, [id]);
 
-  // ✅ Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setJob({ ...job, [name]: value });
   };
 
-  // ✅ Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 

@@ -8,7 +8,7 @@ const MyAcceptedTasks = () => {
   const currentUser = auth.currentUser;
   const currentUserEmail = currentUser?.email;
 
-  // ✅ Fetch accepted jobs for logged-in user
+  
   useEffect(() => {
     if (!currentUserEmail) return;
 
@@ -24,12 +24,12 @@ const MyAcceptedTasks = () => {
       });
   }, [currentUserEmail]);
 
-  // ✅ Handle Done/Cancel (removes from UI + DB)
+ 
   const handleRemove = async (id, action) => {
     const confirmDelete = window.confirm(`Are you sure you want to ${action} this job?`);
     if (!confirmDelete) return;
 
-    // Instantly remove from UI
+    
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
 
     try {
