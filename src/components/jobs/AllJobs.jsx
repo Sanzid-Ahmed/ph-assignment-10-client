@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -22,14 +23,14 @@ const AllJobs = () => {
       });
 
       if (response.ok) {
-        alert("✅ Job deleted successfully!");
+        toast.success("✅ Job deleted successfully!");
         setJobs(jobs.filter((job) => job._id !== id));
       } else {
-        alert("❌ Failed to delete job");
+        toast.error("❌ Failed to delete job");
       }
     } catch (err) {
       console.error("Delete job error:", err);
-      alert("❌ Something went wrong!");
+      toast.err("❌ Something went wrong!");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -9,8 +10,12 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
-      .catch((err) => console.log(err));
+      .then(() => {
+        toast.success("Logged out successfully!");
+      })
+      .catch((err) => {
+        toast.error("Logout failed: " + err.message);
+      });
   };
 
   const links = (

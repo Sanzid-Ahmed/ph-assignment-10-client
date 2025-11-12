@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const MyAcceptedTasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -38,13 +39,13 @@ const MyAcceptedTasks = () => {
       });
 
       if (!response.ok) {
-        alert("❌ Failed to remove from database!");
+        toast.error("❌ Failed to remove from database!");
       } else {
-        alert(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
+        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
       }
     } catch (err) {
       console.error("Delete error:", err);
-      alert("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!");
     }
   };
 

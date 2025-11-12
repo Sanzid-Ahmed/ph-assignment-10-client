@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const AddJob = () => {
   const [user, setUser] = useState(null);
@@ -29,7 +30,7 @@ const AddJob = () => {
     e.preventDefault();
 
     if (!user) {
-      alert("❌ You must be logged in to add a job.");
+      toast("❌ You must be logged in to add a job.");
       return;
     }
 
@@ -47,7 +48,7 @@ const AddJob = () => {
       });
 
       if (response.ok) {
-        alert("✅ Job added successfully!");
+        toast.success("✅ Job added successfully!");
         setJob({
           title: "",
           postedBy: "",
@@ -59,11 +60,11 @@ const AddJob = () => {
           userEmail: "",
         });
       } else {
-        alert("❌ Failed to add job");
+        toast.error("❌ Failed to add job");
       }
     } catch (err) {
       console.error("Add job error:", err);
-      alert("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!");
     }
   };
 

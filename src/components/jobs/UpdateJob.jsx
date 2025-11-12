@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateJob = () => {
   const { id } = useParams();
@@ -43,11 +44,12 @@ const UpdateJob = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("✅ Job updated successfully!");
+        toast.success("✅ Job updated successfully!");
         navigate(`/allJobs/${id}`);
       })
       .catch((err) => {
         console.error("Error updating job:", err);
+        toast.error(err);
       });
   };
 

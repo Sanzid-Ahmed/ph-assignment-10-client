@@ -26,7 +26,10 @@ const Login = () => {
           navigate("/");
         }, 50);
       })
-      .catch(err => setError("Invalid email or password."));
+      .catch(err => {
+        setError("Invalid email or password.");
+        toast.error("Login failed: " + err.message);
+      });
   };
 
   const handleGoogleLogin = () => {
@@ -37,7 +40,10 @@ const Login = () => {
           navigate("/");
         }, 50);
       })
-      .catch(err => setError("Google login failed."));
+      .catch(err => {
+        setError("Google login failed.");
+        toast.error("Google login failed: " + err.message);
+      });
   };
 
   return (

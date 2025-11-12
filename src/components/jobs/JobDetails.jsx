@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -28,7 +29,7 @@ const JobDetails = () => {
 
   const handleAccept = async () => {
     if (!currentUserEmail) {
-      alert("❌ You must be logged in to accept this job.");
+      toast.error("❌ You must be logged in to accept this job.");
       navigate("/login");
       return;
     }
@@ -41,14 +42,14 @@ const JobDetails = () => {
       });
 
       if (response.ok) {
-        alert("✅ Job accepted successfully!");
+        toast.success("✅ Job accepted successfully!");
         navigate("/my-accepted-tasks");
       } else {
-        alert("❌ Failed to accept job.");
+        toast.error("❌ Failed to accept job.");
       }
     } catch (err) {
       console.error("Accept job error:", err);
-      alert("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!");
     }
   };
 

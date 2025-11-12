@@ -28,7 +28,10 @@ const Register = () => {
             toast.success("Registration successful!");
             setTimeout(() => navigate("/"), 50); 
           })
-          .catch(err => setError("Failed to update profile: " + err.message));
+          .catch(err => {
+            setError("Failed to Register: " + err.message);
+            toast.error("Register failed: " + err.message);
+          });
       })
       .catch(err => setError(err.message));
   };
@@ -39,7 +42,10 @@ const Register = () => {
         toast.success("Google login successful!");
         setTimeout(() => navigate("/"), 50);
       })
-      .catch(err => setError("Google login failed: " + err.message));
+      .catch(err => {
+        setError("Google login failed: " + err.message);
+        toast.error("Google Register failed: " + err.message);
+      });
   };
 
   return (
