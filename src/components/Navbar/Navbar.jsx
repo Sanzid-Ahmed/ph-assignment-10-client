@@ -10,7 +10,7 @@ const Navbar = () => {
   const handleLogOut = () => {
     logOut()
       .then(() => {})
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   const links = (
@@ -31,7 +31,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar bg-[#006666] rounded-[8px]">
+    <div className="navbar bg-[#006666] shadow-lg">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -50,13 +50,15 @@ const Navbar = () => {
               />
             </svg>
           </div>
+
           <ul
             tabIndex="-1"
-            className="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-[#006666] text-white font-bold"
+            className="menu menu-sm dropdown-content rounded-box mt-3 w-52 p-2 shadow bg-[#006666] text-white font-bold absolute z-[2000]"
           >
             {links}
           </ul>
         </div>
+
         <Link to="/" className="text-xl text-white font-bold m-3">
           <span className="text-4xl text-black">F</span>ree
           <span className="text-black">M</span>arket
@@ -64,11 +66,13 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-white font-bold">{links}</ul>
+        <ul className="menu menu-horizontal px-1 text-white font-bold">
+          {links}
+        </ul>
       </div>
 
       <div className="navbar-end">
-        {user ? (
+        {user && (
           <div
             className="relative w-10 h-10 mr-3 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-visible cursor-pointer"
             onMouseEnter={() => setIsHovered(true)}
@@ -85,7 +89,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
-        ) : null}
+        )}
 
         {user ? (
           <button
@@ -95,10 +99,7 @@ const Navbar = () => {
             LogOut
           </button>
         ) : (
-          <Link
-            to="/login"
-            className="btn border-0 rounded-3xl font-bold"
-          >
+          <Link to="/login" className="btn border-0 rounded-3xl font-bold">
             Login
           </Link>
         )}
