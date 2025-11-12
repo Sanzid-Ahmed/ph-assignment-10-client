@@ -1,12 +1,18 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useNavigate, Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
-  const { loginUser, loginWithGoogle } = useContext(AuthContext);
+  const { loginUser, loginWithGoogle, user, loading } = useContext(AuthContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   const handleLogin = e => {
     e.preventDefault();
@@ -16,9 +22,22 @@ const Login = () => {
     loginUser(email, password)
       .then(() => {
         toast.success("Login successful!");
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 50);
       })
       .catch(err => setError("Invalid email or password."));
+  };
+
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then(() => {
+        toast.success("Login with Google successful!");
+        setTimeout(() => {
+          navigate("/");
+        }, 50);
+      })
+      .catch(err => setError("Google login failed."));
   };
 
   return (
@@ -32,8 +51,12 @@ const Login = () => {
         <button className="bg-blue-500 text-white w-full p-2">Login</button>
       </form>
       <p className="mt-2">Forgot Password?</p>
-      <p>Don’t have an account? <Link to="/register" className="text-blue-600">Register</Link></p>
-      <button onClick={loginWithGoogle} className="mt-3 border p-2 w-80">Login with Google</button>
+      <p>
+        Don’t have an account? <Link to="/register" className="text-blue-600">Register</Link>
+      </p>
+      <button onClick={handleGoogleLogin} className="mt-3 border p-2 w-80">
+        Login with Google
+      </button>
     </div>
   );
 };

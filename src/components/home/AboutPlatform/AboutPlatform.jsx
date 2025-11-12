@@ -1,5 +1,4 @@
 import React from 'react';
-import { FiGlobe } from 'react-icons/fi';
 import logo from '../../../assets/Gemini_Generated_Image_45u0f345u0f345u0.png'
 
 const AboutPlatform = () => {
