@@ -94,6 +94,7 @@ const AddJob = () => {
           required
         >
           <option value="">Select Category</option>
+          <option value="Software Engineer">Software Engineer</option>
           <option value="Web Development">Web Development</option>
           <option value="Digital Marketing">Digital Marketing</option>
           <option value="Graphics Designing">Graphics Designing</option>

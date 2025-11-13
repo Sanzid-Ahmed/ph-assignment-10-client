@@ -4,21 +4,31 @@ import { toast } from "react-toastify";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
     fetch("http://localhost:3000/allJobs")
       .then((res) => res.json())
-      .then((data) => setJobs(data))
+      .then((data) => {
+        setJobs(data);
+        setLoading(false);
+      })
       .catch((err) => console.error("Failed to fetch jobs:", err))
       .finally(() => setLoading(false));
   }, []);
+
+  const sortedJobs = [...jobs].sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
+  });
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/deleteJob/${id}`, {
+      const response = await fetch(`http://localhost:3000/deletejob/${id}`, {
         method: "DELETE",
       });
 
@@ -30,7 +40,7 @@ const AllJobs = () => {
       }
     } catch (err) {
       console.error("Delete job error:", err);
-      toast.err("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -40,13 +50,24 @@ const AllJobs = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold text-center mb-6">All Jobs</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">All Jobs ({jobs.length})</h2>
+
+        <select
+          value={sortOrder}
+          onChange={(e) => setSortOrder(e.target.value)}
+          className="border rounded px-3 py-1 text-gray-700"
+        >
+          <option value="desc">Newest First</option>
+          <option value="asc">Oldest First</option>
+        </select>
+      </div>
 
       {jobs.length === 0 ? (
         <p className="text-center text-gray-600">No jobs found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {jobs.map((job) => (
+          {sortedJobs.map((job) => (
             <div
               key={job._id}
               className="border rounded p-4 flex flex-col justify-between shadow hover:shadow-lg transition"
@@ -58,6 +79,7 @@ const AllJobs = () => {
                   className="w-full h-40 object-cover rounded mb-3"
                 />
               )}
+
               <h3 className="font-semibold text-lg">{job.title}</h3>
               <p className="text-gray-600">
                 <strong>Category:</strong> {job.category || "N/A"}
@@ -65,10 +87,17 @@ const AllJobs = () => {
               <p className="text-gray-600">
                 <strong>Posted By:</strong> {job.postedBy || "N/A"}
               </p>
-              <p className="text-gray-500 mb-3">
+              <p className="text-gray-500 mb-2">
                 {job.summary && job.summary.length > 80
                   ? job.summary.substring(0, 80) + "..."
                   : job.summary}
+              </p>
+
+              <p className="text-sm text-gray-500 mb-3">
+                Posted:{" "}
+                {job.createdAt
+                  ? new Date(job.createdAt).toLocaleString()
+                  : "Unknown"}
               </p>
 
               <div className="mt-auto flex justify-between items-center">
