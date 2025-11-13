@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import { ToastContainer } from "react-toastify";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -212,7 +212,13 @@ const Navbar = () => {
           </Link>
         )}
 
-        <ToastContainer />
+        <Toaster
+        // position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       </div>
     </div>
   );

@@ -144,6 +144,13 @@ const AddJob = () => {
           Add Job
         </button>
       </form>
+      <Toaster
+        // position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
     </div>
   );
 };

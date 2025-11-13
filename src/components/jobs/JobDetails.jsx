@@ -122,6 +122,13 @@ const JobDetails = () => {
           Back to All Jobs
         </Link>
       </div>
+      <Toaster
+        // position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
     </div>
   );
 };

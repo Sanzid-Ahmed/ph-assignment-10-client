@@ -63,6 +63,13 @@ const Login = () => {
       <button onClick={handleGoogleLogin} className="mt-3 border p-2 w-80">
         Login with Google
       </button>
+      <Toaster
+        // position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
     </div>
   );
 };
