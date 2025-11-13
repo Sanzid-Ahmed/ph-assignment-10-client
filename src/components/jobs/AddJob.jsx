@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const AddJob = () => {
@@ -32,10 +32,7 @@ const AddJob = () => {
     e.preventDefault();
 
     if (!user) {
-      toast("❌ You must be logged in to add a job.", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast("❌ You must be logged in to add a job.");
       return;
     }
 
@@ -50,10 +47,7 @@ const AddJob = () => {
       const response = await axios.post(`${BASE_URL}/addJob`, jobData);
 
       if (response.status === 201) {
-        toast.success("✅ Job added successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success("✅ Job added successfully!");
         setJob({
           title: "",
           postedBy: "",
@@ -65,17 +59,11 @@ const AddJob = () => {
           userEmail: "",
         });
       } else {
-        toast.error("❌ Failed to add job", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to add job");
       }
     } catch (err) {
       console.error("Add job error:", err);
-      toast.error("❌ Something went wrong!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -83,6 +71,13 @@ const AddJob = () => {
 
   return (
     <div className="max-w-lg mx-auto p-6 rounded-xl shadow-md mt-10">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-5 text-center text-base-content dark:text-base-100">
         Add New Job
       </h2>
@@ -156,13 +151,6 @@ const AddJob = () => {
           Add Job
         </button>
       </form>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

@@ -21,46 +21,40 @@ const Login = () => {
 
     loginUser(email, password)
       .then(() => {
-        toast.success("Login successful!", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success("Login successful!");
         setTimeout(() => {
           navigate("/");
         }, 50);
       })
       .catch(err => {
         setError("Invalid email or password.");
-        toast.error("Login failed: ", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("Login failed");
       });
   };
 
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then(() => {
-        toast.success("Login with Google successful!", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success("Login with Google successful!");
         setTimeout(() => {
           navigate("/");
         }, 50);
       })
       .catch(err => {
         setError("Google login failed.");
-        toast.error("Google login failed: ", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("Google login failed");
       });
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <Toaster />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-4">Login</h2>
       <form onSubmit={handleLogin} className="w-80 space-y-3">
         <input name="email" placeholder="Email" className="border p-2 w-full" required />

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import { ToastContainer } from "react-toastify";
 import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
@@ -12,14 +11,8 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => toast.success("Logged out successfully!", {
-      duration: 2000,
-      position: "top-center",
-    }))
-      .catch((err) => toast.error("Logout failed: ", {
-      duration: 2000,
-      position: "top-center",
-    }));
+      .then(() => toast.success("Logged out successfully!"))
+      .catch((err) => toast.error("Logout failed"));
   };
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -66,6 +59,13 @@ const Navbar = () => {
 
   return (
     <div className="navbar bg-[#006666] shadow-lg relative">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -217,14 +217,6 @@ const Navbar = () => {
             Login
           </Link>
         )}
-
-        <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
       </div>
     </div>
   );

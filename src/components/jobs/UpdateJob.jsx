@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const UpdateJob = () => {
@@ -24,10 +24,7 @@ const UpdateJob = () => {
         setJob(response.data);
       } catch (err) {
         console.error("Error fetching job:", err);
-        toast.error("❌ Failed to fetch job data", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to fetch job data");
       } finally {
         setLoading(false);
       }
@@ -47,23 +44,14 @@ const UpdateJob = () => {
     try {
       const response = await axios.put(`${BASE_URL}/updateJob/${id}`, job);
       if (response.status === 200) {
-        toast.success("✅ Job updated successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success("✅ Job updated successfully!");
         navigate(`/allJobs/${id}`);
       } else {
-        toast.error("❌ Failed to update job", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to update job");
       }
     } catch (err) {
       console.error("Error updating job:", err);
-      toast.error("❌ Something went wrong!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -71,6 +59,13 @@ const UpdateJob = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-md">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-4 text-center">Update Job</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -140,13 +135,6 @@ const UpdateJob = () => {
           Update Job
         </button>
       </form>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

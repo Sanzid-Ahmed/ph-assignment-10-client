@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { toast } from "react-toastify";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const JobDetails = () => {
   const BASE_URL = "https://freemarket-lovat.vercel.app";
@@ -22,10 +22,7 @@ const JobDetails = () => {
         setJob(response.data);
       } catch (err) {
         console.error("Error fetching job details:", err);
-        toast.error("❌ Failed to fetch job details", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to fetch job details");
       } finally {
         setLoading(false);
       }
@@ -35,10 +32,7 @@ const JobDetails = () => {
 
   const handleAccept = async () => {
     if (!currentUserEmail) {
-      toast.error("❌ You must be logged in to accept this job.", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ You must be logged in to accept this job.");
       navigate("/login");
       return;
     }
@@ -47,17 +41,11 @@ const JobDetails = () => {
       await axios.put(`${BASE_URL}/updatejob/${id}`, {
         acceptedByEmail: currentUserEmail,
       });
-      toast.success("✅ Job accepted successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.success("✅ Job accepted successfully!");
       navigate("/my-accepted-tasks");
     } catch (err) {
       console.error("Accept job error:", err);
-      toast.error("❌ Something went wrong!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -73,6 +61,13 @@ const JobDetails = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-8 rounded-lg shadow-md mt-8 space-y-4">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       {job.coverImage && (
         <img
           src={job.coverImage}
@@ -134,13 +129,6 @@ const JobDetails = () => {
           Back to All Jobs
         </Link>
       </div>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

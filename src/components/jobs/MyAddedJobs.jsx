@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 const MyAddedJobs = () => {
@@ -20,10 +20,7 @@ const MyAddedJobs = () => {
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
-        toast.error("❌ Failed to load your jobs", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to load your jobs");
       } finally {
         setLoading(false);
       }
@@ -41,22 +38,13 @@ const MyAddedJobs = () => {
     try {
       const response = await axios.delete(`${BASE_URL}/deletejob/${id}`);
       if (response.status === 200) {
-        toast.success("✅ Job deleted successfully!", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success("✅ Job deleted successfully!");
       } else {
-        toast.error("❌ Failed to delete job", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to delete job");
       }
     } catch (err) {
       console.error("Delete job error:", err);
-      toast.error("❌ Something went wrong!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -66,6 +54,13 @@ const MyAddedJobs = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-10">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold text-center mb-6">
         My Added Jobs ({jobs.length})
       </h2>
@@ -119,13 +114,6 @@ const MyAddedJobs = () => {
           ))}
         </div>
       )}
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

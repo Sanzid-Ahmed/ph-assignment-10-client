@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { toast } from "react-toastify";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 const MyAcceptedTasks = () => {
   const BASE_URL = "https://freemarket-lovat.vercel.app";
@@ -22,10 +22,7 @@ const MyAcceptedTasks = () => {
         setTasks(response.data);
       } catch (err) {
         console.error("Failed to load accepted tasks:", err);
-        toast.error("❌ Failed to load your tasks", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("❌ Failed to load your tasks");
       } finally {
         setLoading(false);
       }
@@ -44,10 +41,7 @@ const MyAcceptedTasks = () => {
     try {
       const response = await axios.delete(`${BASE_URL}/deleteJob/${id}`);
       if (response.status === 200) {
-        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`, {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
       } else {
         toast.error("❌ Failed to remove from database!", {
       duration: 2000,
@@ -56,10 +50,7 @@ const MyAcceptedTasks = () => {
       }
     } catch (err) {
       console.error("Delete error:", err);
-      toast.error("❌ Something went wrong!", {
-      duration: 2000,
-      position: "top-center",
-    });
+      toast.error("❌ Something went wrong!");
     }
   };
 
@@ -71,6 +62,13 @@ const MyAcceptedTasks = () => {
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-6 rounded-xl shadow-sm">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-6 text-center ">
         My Accepted Tasks
       </h2>
@@ -121,13 +119,6 @@ const MyAcceptedTasks = () => {
           </div>
         ))}
       </div>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

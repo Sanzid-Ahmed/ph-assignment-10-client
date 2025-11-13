@@ -7,6 +7,13 @@ import { Toaster } from "react-hot-toast";
 const MainLayout = () => {
   return (
     <div>
+        <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <div>
         <header>
           <Navbar></Navbar>
@@ -18,13 +25,6 @@ const MainLayout = () => {
           <Footer></Footer>
         </footer>
       </div>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };

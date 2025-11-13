@@ -25,18 +25,12 @@ const Register = () => {
         
         updateUserProfile(name, photo)
           .then(() => {
-            toast.success("Registration successful!", {
-      duration: 2000,
-      position: "top-center",
-    });
+            toast.success("Registration successful!");
             setTimeout(() => navigate("/"), 50); 
           })
           .catch(err => {
             setError("Failed to Register: " + err.message);
-            toast.error("Register failed: ", {
-      duration: 2000,
-      position: "top-center",
-    });
+            toast.error("Register failed");
           });
       })
       .catch(err => setError(err.message));
@@ -50,16 +44,19 @@ const Register = () => {
       })
       .catch(err => {
         setError("Google login failed: " + err.message);
-        toast.error("Google Register failed: ", {
-      duration: 2000,
-      position: "top-center",
-    });
+        toast.error("Google Register failed");
       });
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <Toaster />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 2000,
+          style: { fontSize: "16px" },
+        }}
+      />
       <h2 className="text-2xl font-bold mb-4">Register</h2>
       <form onSubmit={handleRegister} className="w-80 space-y-3">
         <input name="name" placeholder="Name" className="border p-2 w-full" required />
@@ -73,13 +70,6 @@ const Register = () => {
         Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
       </p>
       <button onClick={handleGoogleLogin} className="mt-3 border p-2 w-80">Sign in with Google</button>
-      <Toaster
-        // position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
     </div>
   );
 };
