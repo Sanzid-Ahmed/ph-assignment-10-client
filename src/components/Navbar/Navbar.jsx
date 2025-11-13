@@ -32,6 +32,9 @@ const Navbar = () => {
       <li>
         <NavLink to="/my-accepted-tasks">My accepted tasks</NavLink>
       </li>
+      <li>
+        <NavLink to="/my-added-tasks">My added tasks</NavLink>
+      </li>
     </>
   );
 

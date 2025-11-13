@@ -30,7 +30,7 @@ const LatestJobs = () => {
     <section className="py-12 bg-gray-50 mt-10">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h2 className="text-3xl font-bold text-gray-800 mb-8">
-          Latest <span className="text-teal-600">Jobs</span>
+          Latest Jobs
         </h2>
 
         {jobs.length === 0 ? (
