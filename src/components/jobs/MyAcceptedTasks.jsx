@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MyAcceptedTasks = () => {
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://freemarket-nine.vercel.app";
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);

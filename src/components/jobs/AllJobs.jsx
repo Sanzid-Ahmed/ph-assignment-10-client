@@ -9,7 +9,7 @@ const AllJobs = () => {
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://freemarket-nine.vercel.app";
   useEffect(() => {
     const fetchJobs = async () => {
       try {

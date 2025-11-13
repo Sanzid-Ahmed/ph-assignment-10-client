@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const MyAddedJobs = () => {
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://freemarket-nine.vercel.app";
 
   const { user } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);

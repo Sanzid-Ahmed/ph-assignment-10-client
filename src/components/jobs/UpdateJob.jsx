@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const UpdateJob = () => {
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://freemarket-nine.vercel.app";
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);

@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const JobDetails = () => {
-  const BASE_URL = "http://localhost:3000";
+  const BASE_URL = "https://freemarket-nine.vercel.app";
   const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
