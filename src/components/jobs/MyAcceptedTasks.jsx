@@ -50,7 +50,7 @@ const MyAcceptedTasks = () => {
   };
 
   if (loading)
-    return <p className="text-center text-gray-600 mt-10">Loading your accepted jobs...</p>;
+    return <p className="text-center text-gray-600 mt-10">L<span className="loading loading-spinner loading-xl"></span>ading your accepted jobs...</p>;
 
   if (!tasks.length)
     return <p className="text-center text-gray-500 mt-10">You haven’t accepted any jobs yet.</p>;

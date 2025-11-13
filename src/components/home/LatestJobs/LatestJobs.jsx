@@ -23,8 +23,8 @@ const LatestJobs = () => {
 
   if (loading) {
     return (
-      <div className="text-center my-10 text-lg font-semibold text-gray-600">
-        Loading latest jobs...
+      <div className="text-center my-10 text-xl font-semibold text-gray-600">
+        L<span className="loading loading-spinner loading-sm"></span>ading latest jobs...
       </div>
     );
   }

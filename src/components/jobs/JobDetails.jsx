@@ -49,7 +49,7 @@ const JobDetails = () => {
   };
 
   if (loading)
-    return <p className="text-center mt-10 text-gray-600">Loading job details...</p>;
+    return <p className="text-center mt-10 text-gray-600">L<span className="loading loading-spinner loading-xl"></span>ading job details...</p>;
   if (!job)
     return <p className="text-center mt-10 text-red-500">Job not found!</p>;
 

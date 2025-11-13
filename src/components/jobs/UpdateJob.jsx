@@ -53,7 +53,7 @@ const UpdateJob = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-10">Loading job data...</p>;
+  if (loading) return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading job data...</p>;
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-md">

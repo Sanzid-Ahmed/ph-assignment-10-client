@@ -43,7 +43,7 @@ const AllJobs = () => {
   };
 
   if (loading) {
-    return <p className="text-center mt-10">Loading jobs...</p>;
+    return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading jobs...</p>;
   }
 
   return (

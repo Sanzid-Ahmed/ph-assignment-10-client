@@ -47,7 +47,7 @@ const MyAddedJobs = () => {
   };
 
   if (loading) {
-    return <p className="text-center mt-10">Loading your added jobs...</p>;
+    return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading your added jobs...</p>;
   }
 
   return (
