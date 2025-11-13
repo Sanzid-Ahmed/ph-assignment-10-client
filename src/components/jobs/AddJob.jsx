@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const AddJob = () => {
-  const BASE_URL = "https://freemarket-lovat.vercel.app";
+  const BASE_URL = "http://localhost:3000";
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -18,7 +18,6 @@ const AddJob = () => {
     postedBy: "",
     category: "",
     summary: "",
-    description: "",
     coverImage: "",
     salary: "",
     userEmail: "",
@@ -53,7 +52,6 @@ const AddJob = () => {
           postedBy: "",
           category: "",
           summary: "",
-          description: "",
           coverImage: "",
           salary: "",
           userEmail: "",
@@ -117,14 +115,6 @@ const AddJob = () => {
           required
         />
 
-        <textarea
-          name="description"
-          value={job.description}
-          onChange={handleChange}
-          placeholder="Job Description"
-          className="w-full border p-2 rounded"
-          required
-        />
 
         <input
           name="coverImage"

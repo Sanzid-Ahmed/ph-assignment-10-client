@@ -1,28 +1,42 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const UpdateJob = () => {
-  const BASE_URL = "https://freemarket-lovat.vercel.app";
-
+  const BASE_URL = "http://localhost:3000";
   const { id } = useParams();
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
   const [job, setJob] = useState({
     title: "",
+    postedBy: "",
     category: "",
+    summary: "",
+    coverImage: "",
     salary: "",
-    deadline: "",
-    description: "",
+    userEmail: "",
   });
+
   const [loading, setLoading] = useState(true);
 
+  
+  useEffect(() => {
+    const auth = getAuth();
+    setUser(auth.currentUser);
+  }, []);
+
+  
   useEffect(() => {
     const fetchJob = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/allJobs/${id}`);
-        setJob(response.data);
+        if (response.data) {
+          setJob(response.data);
+        }
       } catch (err) {
         console.error("Error fetching job:", err);
         toast.error("❌ Failed to fetch job data");
@@ -42,8 +56,22 @@ const UpdateJob = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      toast.error("❌ You must be logged in to update a job.");
+      return;
+    }
+
+    const jobData = {
+      ...job,
+      postedBy: job.postedBy || user.displayName || "Anonymous",
+      userEmail: job.userEmail || user.email,
+    };
+
     try {
-      const response = await axios.put(`${BASE_URL}/updateJob/${id}`, job);
+      const response = await axios.put(`${BASE_URL}/updateJob/${id}`, jobData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
       if (response.status === 200) {
         toast.success("✅ Job updated successfully!");
         navigate(`/allJobs/${id}`);
@@ -66,72 +94,69 @@ const UpdateJob = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-md">
-      
+      <ToastContainer position="top-right" />
       <h2 className="text-2xl font-bold mb-4 text-center">Update Job</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block font-semibold">Title</label>
-          <input
-            type="text"
-            name="title"
-            value={job.title || ""}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-        </div>
+        <input
+          type="text"
+          name="title"
+          value={job.title || ""}
+          onChange={handleChange}
+          placeholder="Job Title"
+          className="w-full border p-2 rounded"
+          required
+        />
 
-        <div>
-          <label className="block font-semibold">Category</label>
-          <input
-            type="text"
-            name="category"
-            value={job.category || ""}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-        </div>
+        <select
+          name="category"
+          value={job.category || ""}
+          onChange={handleChange}
+          className="w-full border p-2 rounded"
+          required
+        >
+          <option value="">Select Category</option>
+          <option value="Software Engineer">Software Engineer</option>
+          <option value="Web Development">Web Development</option>
+          <option value="Digital Marketing">Digital Marketing</option>
+          <option value="Graphics Designing">Graphics Designing</option>
+          <option value="Content Writing">Content Writing</option>
+          <option value="Other">Other</option>
+        </select>
 
-        <div>
-          <label className="block font-semibold">Salary</label>
-          <input
-            type="text"
-            name="salary"
-            value={job.salary || ""}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-        </div>
+        <input
+          type="text"
+          name="summary"
+          value={job.summary || ""}
+          onChange={handleChange}
+          placeholder="Short Summary"
+          className="w-full border p-2 rounded"
+          required
+        />
 
-        <div>
-          <label className="block font-semibold">Deadline</label>
-          <input
-            type="date"
-            name="deadline"
-            value={job.deadline || ""}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-        </div>
+        <input
+          type="text"
+          name="coverImage"
+          value={job.coverImage || ""}
+          onChange={handleChange}
+          placeholder="Cover Image URL"
+          className="w-full border p-2 rounded"
+          required
+        />
 
-        <div>
-          <label className="block font-semibold">Description</label>
-          <textarea
-            name="description"
-            value={job.description || ""}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded h-24"
-          ></textarea>
-        </div>
+        <input
+          type="text"
+          name="salary"
+          value={job.salary || ""}
+          onChange={handleChange}
+          placeholder="Salary"
+          className="w-full border p-2 rounded"
+          required
+        />
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition"
+          className="w-full bg-[#006666] text-white font-semibold py-2 rounded hover:bg-blue-600 transition"
         >
           Update Job
         </button>

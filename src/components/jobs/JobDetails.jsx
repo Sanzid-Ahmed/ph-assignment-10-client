@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const JobDetails = () => {
-  const BASE_URL = "https://freemarket-lovat.vercel.app";
+  const BASE_URL = "http://localhost:3000";
   const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
@@ -100,9 +100,6 @@ const JobDetails = () => {
 
       <p className="leading-relaxed">
         <strong>Summary:</strong> {job.summary || "No summary"}
-      </p>
-      <p className="leading-relaxed">
-        <strong>Description:</strong> {job.description || "No description"}
       </p>
 
       <div className="flex flex-wrap justify-between gap-3 mt-4">

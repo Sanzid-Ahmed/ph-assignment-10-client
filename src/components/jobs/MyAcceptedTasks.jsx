@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const MyAcceptedTasks = () => {
-  const BASE_URL = "https://freemarket-lovat.vercel.app";
+  const BASE_URL = "http://localhost:3000";
 
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,6 @@ const MyAcceptedTasks = () => {
     );
     if (!confirmDelete) return;
 
-    // Optimistic UI update
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
 
     try {
