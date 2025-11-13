@@ -24,7 +24,10 @@ const UpdateJob = () => {
         setJob(response.data);
       } catch (err) {
         console.error("Error fetching job:", err);
-        toast.error("❌ Failed to fetch job data");
+        toast.error("❌ Failed to fetch job data", {
+      duration: 2000,
+      position: "top-center",
+    });
       } finally {
         setLoading(false);
       }
@@ -44,14 +47,23 @@ const UpdateJob = () => {
     try {
       const response = await axios.put(`${BASE_URL}/updateJob/${id}`, job);
       if (response.status === 200) {
-        toast.success("✅ Job updated successfully!");
+        toast.success("✅ Job updated successfully!", {
+      duration: 2000,
+      position: "top-center",
+    });
         navigate(`/allJobs/${id}`);
       } else {
-        toast.error("❌ Failed to update job");
+        toast.error("❌ Failed to update job", {
+      duration: 2000,
+      position: "top-center",
+    });
       }
     } catch (err) {
       console.error("Error updating job:", err);
-      toast.error("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!", {
+      duration: 2000,
+      position: "top-center",
+    });
     }
   };
 

@@ -22,7 +22,10 @@ const JobDetails = () => {
         setJob(response.data);
       } catch (err) {
         console.error("Error fetching job details:", err);
-        toast.error("❌ Failed to fetch job details");
+        toast.error("❌ Failed to fetch job details", {
+      duration: 2000,
+      position: "top-center",
+    });
       } finally {
         setLoading(false);
       }
@@ -32,7 +35,10 @@ const JobDetails = () => {
 
   const handleAccept = async () => {
     if (!currentUserEmail) {
-      toast.error("❌ You must be logged in to accept this job.");
+      toast.error("❌ You must be logged in to accept this job.", {
+      duration: 2000,
+      position: "top-center",
+    });
       navigate("/login");
       return;
     }
@@ -41,11 +47,17 @@ const JobDetails = () => {
       await axios.put(`${BASE_URL}/updatejob/${id}`, {
         acceptedByEmail: currentUserEmail,
       });
-      toast.success("✅ Job accepted successfully!");
+      toast.success("✅ Job accepted successfully!", {
+      duration: 2000,
+      position: "top-center",
+    });
       navigate("/my-accepted-tasks");
     } catch (err) {
       console.error("Accept job error:", err);
-      toast.error("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!", {
+      duration: 2000,
+      position: "top-center",
+    });
     }
   };
 

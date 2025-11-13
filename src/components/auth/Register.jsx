@@ -25,12 +25,18 @@ const Register = () => {
         
         updateUserProfile(name, photo)
           .then(() => {
-            toast.success("Registration successful!");
+            toast.success("Registration successful!", {
+      duration: 2000,
+      position: "top-center",
+    });
             setTimeout(() => navigate("/"), 50); 
           })
           .catch(err => {
             setError("Failed to Register: " + err.message);
-            toast.error("Register failed: " + err.message);
+            toast.error("Register failed: ", {
+      duration: 2000,
+      position: "top-center",
+    });
           });
       })
       .catch(err => setError(err.message));
@@ -44,7 +50,10 @@ const Register = () => {
       })
       .catch(err => {
         setError("Google login failed: " + err.message);
-        toast.error("Google Register failed: " + err.message);
+        toast.error("Google Register failed: ", {
+      duration: 2000,
+      position: "top-center",
+    });
       });
   };
 

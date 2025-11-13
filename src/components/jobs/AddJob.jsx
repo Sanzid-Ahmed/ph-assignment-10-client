@@ -32,7 +32,10 @@ const AddJob = () => {
     e.preventDefault();
 
     if (!user) {
-      toast("❌ You must be logged in to add a job.");
+      toast("❌ You must be logged in to add a job.", {
+      duration: 2000,
+      position: "top-center",
+    });
       return;
     }
 
@@ -47,7 +50,10 @@ const AddJob = () => {
       const response = await axios.post(`${BASE_URL}/addJob`, jobData);
 
       if (response.status === 201) {
-        toast.success("✅ Job added successfully!");
+        toast.success("✅ Job added successfully!", {
+      duration: 2000,
+      position: "top-center",
+    });
         setJob({
           title: "",
           postedBy: "",
@@ -59,11 +65,17 @@ const AddJob = () => {
           userEmail: "",
         });
       } else {
-        toast.error("❌ Failed to add job");
+        toast.error("❌ Failed to add job", {
+      duration: 2000,
+      position: "top-center",
+    });
       }
     } catch (err) {
       console.error("Add job error:", err);
-      toast.error("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!", {
+      duration: 2000,
+      position: "top-center",
+    });
     }
   };
 

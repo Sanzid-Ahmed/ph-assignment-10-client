@@ -12,8 +12,14 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => toast.success("Logged out successfully!"))
-      .catch((err) => toast.error("Logout failed: " + err.message));
+      .then(() => toast.success("Logged out successfully!", {
+      duration: 2000,
+      position: "top-center",
+    }))
+      .catch((err) => toast.error("Logout failed: ", {
+      duration: 2000,
+      position: "top-center",
+    }));
   };
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");

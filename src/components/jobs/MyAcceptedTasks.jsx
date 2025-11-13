@@ -22,7 +22,10 @@ const MyAcceptedTasks = () => {
         setTasks(response.data);
       } catch (err) {
         console.error("Failed to load accepted tasks:", err);
-        toast.error("❌ Failed to load your tasks");
+        toast.error("❌ Failed to load your tasks", {
+      duration: 2000,
+      position: "top-center",
+    });
       } finally {
         setLoading(false);
       }
@@ -41,13 +44,22 @@ const MyAcceptedTasks = () => {
     try {
       const response = await axios.delete(`${BASE_URL}/deleteJob/${id}`);
       if (response.status === 200) {
-        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
+        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`, {
+      duration: 2000,
+      position: "top-center",
+    });
       } else {
-        toast.error("❌ Failed to remove from database!");
+        toast.error("❌ Failed to remove from database!", {
+      duration: 2000,
+      position: "top-center",
+    });
       }
     } catch (err) {
       console.error("Delete error:", err);
-      toast.error("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!", {
+      duration: 2000,
+      position: "top-center",
+    });
     }
   };
 

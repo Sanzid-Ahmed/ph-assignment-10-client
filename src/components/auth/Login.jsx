@@ -21,28 +21,40 @@ const Login = () => {
 
     loginUser(email, password)
       .then(() => {
-        toast.success("Login successful!");
+        toast.success("Login successful!", {
+      duration: 2000,
+      position: "top-center",
+    });
         setTimeout(() => {
           navigate("/");
         }, 50);
       })
       .catch(err => {
         setError("Invalid email or password.");
-        toast.error("Login failed: " + err.message);
+        toast.error("Login failed: ", {
+      duration: 2000,
+      position: "top-center",
+    });
       });
   };
 
   const handleGoogleLogin = () => {
     loginWithGoogle()
       .then(() => {
-        toast.success("Login with Google successful!");
+        toast.success("Login with Google successful!", {
+      duration: 2000,
+      position: "top-center",
+    });
         setTimeout(() => {
           navigate("/");
         }, 50);
       })
       .catch(err => {
         setError("Google login failed.");
-        toast.error("Google login failed: " + err.message);
+        toast.error("Google login failed: ", {
+      duration: 2000,
+      position: "top-center",
+    });
       });
   };
 

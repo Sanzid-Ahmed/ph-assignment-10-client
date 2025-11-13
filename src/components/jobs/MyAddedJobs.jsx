@@ -20,7 +20,10 @@ const MyAddedJobs = () => {
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
-        toast.error("❌ Failed to load your jobs");
+        toast.error("❌ Failed to load your jobs", {
+      duration: 2000,
+      position: "top-center",
+    });
       } finally {
         setLoading(false);
       }
@@ -38,13 +41,22 @@ const MyAddedJobs = () => {
     try {
       const response = await axios.delete(`${BASE_URL}/deletejob/${id}`);
       if (response.status === 200) {
-        toast.success("✅ Job deleted successfully!");
+        toast.success("✅ Job deleted successfully!", {
+      duration: 2000,
+      position: "top-center",
+    });
       } else {
-        toast.error("❌ Failed to delete job");
+        toast.error("❌ Failed to delete job", {
+      duration: 2000,
+      position: "top-center",
+    });
       }
     } catch (err) {
       console.error("Delete job error:", err);
-      toast.error("❌ Something went wrong!");
+      toast.error("❌ Something went wrong!", {
+      duration: 2000,
+      position: "top-center",
+    });
     }
   };
 
