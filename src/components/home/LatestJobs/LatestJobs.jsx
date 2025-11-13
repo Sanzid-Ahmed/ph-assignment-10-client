@@ -69,7 +69,7 @@ const LatestJobs = () => {
 
                 <Link
                   to={`/alljobs/${job._id}`}
-                  className="btn bg-primary hover:bg-primary-focus text-white font-bold px-6 py-2 rounded-full transition"
+                  className="btn bg-[#006666] hover:bg-primary-focus text-white font-bold px-6 py-2 rounded-full transition"
                 >
                   View Details
                 </Link>
