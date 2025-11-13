@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const AddJob = () => {
@@ -42,7 +43,6 @@ const AddJob = () => {
       userEmail: user.email,
     };
 
-
     try {
       const response = await axios.post(`${BASE_URL}/addJob`, jobData);
 
@@ -67,17 +67,17 @@ const AddJob = () => {
     }
   };
 
-  if (!user) return <p>L<span className="loading loading-spinner loading-xl"></span>ading user info...</p>;
+  if (!user)
+    return (
+      <p>
+        L<span className="loading loading-spinner loading-xl"></span>ading user
+        info...
+      </p>
+    );
 
   return (
     <div className="max-w-lg mx-auto p-6 rounded-xl shadow-md mt-10">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       <h2 className="text-2xl font-bold mb-5 text-center text-base-content dark:text-base-100">
         Add New Job
       </h2>

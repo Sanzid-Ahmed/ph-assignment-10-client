@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const MyAddedJobs = () => {
@@ -16,7 +17,9 @@ const MyAddedJobs = () => {
 
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/my-added-jobs/${user.email}`);
+        const response = await axios.get(
+          `${BASE_URL}/my-added-jobs/${user.email}`
+        );
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
@@ -32,7 +35,6 @@ const MyAddedJobs = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
-    // Optimistic UI update
     setJobs(jobs.filter((job) => job._id !== id));
 
     try {
@@ -49,18 +51,17 @@ const MyAddedJobs = () => {
   };
 
   if (loading) {
-    return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading your added jobs...</p>;
+    return (
+      <p className="text-center mt-10">
+        L<span className="loading loading-spinner loading-xl"></span>ading your
+        added jobs...
+      </p>
+    );
   }
 
   return (
     <div className="max-w-6xl mx-auto mt-10">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       <h2 className="text-2xl font-bold text-center mb-6">
         My Added Jobs ({jobs.length})
       </h2>

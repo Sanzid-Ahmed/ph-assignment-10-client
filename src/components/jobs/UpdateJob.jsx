@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const UpdateJob = () => {
@@ -55,17 +56,17 @@ const UpdateJob = () => {
     }
   };
 
-  if (loading) return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading job data...</p>;
+  if (loading)
+    return (
+      <p className="text-center mt-10">
+        L<span className="loading loading-spinner loading-xl"></span>ading job
+        data...
+      </p>
+    );
 
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-md">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       <h2 className="text-2xl font-bold mb-4 text-center">Update Job</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">

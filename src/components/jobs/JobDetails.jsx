@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const JobDetails = () => {
   const BASE_URL = "https://freemarket-lovat.vercel.app";
@@ -50,7 +51,12 @@ const JobDetails = () => {
   };
 
   if (loading)
-    return <p className="text-center mt-10 text-gray-600">L<span className="loading loading-spinner loading-xl"></span>ading job details...</p>;
+    return (
+      <p className="text-center mt-10 text-gray-600">
+        L<span className="loading loading-spinner loading-xl"></span>ading job
+        details...
+      </p>
+    );
   if (!job)
     return <p className="text-center mt-10 text-red-500">Job not found!</p>;
 
@@ -61,13 +67,7 @@ const JobDetails = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-8 rounded-lg shadow-md mt-8 space-y-4">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       {job.coverImage && (
         <img
           src={job.coverImage}
@@ -76,14 +76,28 @@ const JobDetails = () => {
         />
       )}
       <h2 className="text-3xl font-bold">{job.title}</h2>
-      
-      <p><strong>Category:</strong> {job.category || "N/A"}</p>
-      <p><strong>Posted By:</strong> {job.postedBy || "Anonymous"}</p>
-      <p><strong>Poster Email:</strong> {job.userEmail || "N/A"}</p>
-      <p><strong>Salary:</strong> {job.salary || "Negotiable"}</p>
-      <p><strong>Posted At:</strong> {job.createdAt ? new Date(job.createdAt).toLocaleString() : "N/A"}</p>
-      <p><strong>Accepted By:</strong> {job.acceptedByEmail || "Not accepted yet"}</p>
-      
+
+      <p>
+        <strong>Category:</strong> {job.category || "N/A"}
+      </p>
+      <p>
+        <strong>Posted By:</strong> {job.postedBy || "Anonymous"}
+      </p>
+      <p>
+        <strong>Poster Email:</strong> {job.userEmail || "N/A"}
+      </p>
+      <p>
+        <strong>Salary:</strong> {job.salary || "Negotiable"}
+      </p>
+      <p>
+        <strong>Posted At:</strong>{" "}
+        {job.createdAt ? new Date(job.createdAt).toLocaleString() : "N/A"}
+      </p>
+      <p>
+        <strong>Accepted By:</strong>{" "}
+        {job.acceptedByEmail || "Not accepted yet"}
+      </p>
+
       <p className="leading-relaxed">
         <strong>Summary:</strong> {job.summary || "No summary"}
       </p>

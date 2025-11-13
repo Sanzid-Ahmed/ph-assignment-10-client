@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MyAcceptedTasks = () => {
   const BASE_URL = "https://freemarket-lovat.vercel.app";
@@ -18,7 +19,9 @@ const MyAcceptedTasks = () => {
 
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/my-accepted-tasks/${currentUserEmail}`);
+        const response = await axios.get(
+          `${BASE_URL}/my-accepted-tasks/${currentUserEmail}`
+        );
         setTasks(response.data);
       } catch (err) {
         console.error("Failed to load accepted tasks:", err);
@@ -32,7 +35,9 @@ const MyAcceptedTasks = () => {
   }, [currentUserEmail]);
 
   const handleRemove = async (id, action) => {
-    const confirmDelete = window.confirm(`Are you sure you want to ${action} this job?`);
+    const confirmDelete = window.confirm(
+      `Are you sure you want to ${action} this job?`
+    );
     if (!confirmDelete) return;
 
     // Optimistic UI update
@@ -41,12 +46,16 @@ const MyAcceptedTasks = () => {
     try {
       const response = await axios.delete(`${BASE_URL}/deleteJob/${id}`);
       if (response.status === 200) {
-        toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
+        toast.success(
+          `✅ Job ${
+            action === "cancel" ? "cancelled" : "completed"
+          } successfully!`
+        );
       } else {
         toast.error("❌ Failed to remove from database!", {
-      duration: 2000,
-      position: "top-center",
-    });
+          duration: 2000,
+          position: "top-center",
+        });
       }
     } catch (err) {
       console.error("Delete error:", err);
@@ -55,20 +64,23 @@ const MyAcceptedTasks = () => {
   };
 
   if (loading)
-    return <p className="text-center text-gray-600 mt-10">L<span className="loading loading-spinner loading-xl"></span>ading your accepted jobs...</p>;
+    return (
+      <p className="text-center text-gray-600 mt-10">
+        L<span className="loading loading-spinner loading-xl"></span>ading your
+        accepted jobs...
+      </p>
+    );
 
   if (!tasks.length)
-    return <p className="text-center text-gray-500 mt-10">You haven’t accepted any jobs yet.</p>;
+    return (
+      <p className="text-center text-gray-500 mt-10">
+        You haven’t accepted any jobs yet.
+      </p>
+    );
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-6 rounded-xl shadow-sm">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       <h2 className="text-2xl font-bold mb-6 text-center ">
         My Accepted Tasks
       </h2>
@@ -92,7 +104,8 @@ const MyAcceptedTasks = () => {
                 <span className="font-medium">Category:</span> {task.category}
               </p>
               <p className="mb-1">
-                <span className="font-medium">Salary:</span> {task.salary || "Negotiable"}
+                <span className="font-medium">Salary:</span>{" "}
+                {task.salary || "Negotiable"}
               </p>
               <p className=" mb-3">
                 <span className="font-medium">Posted By:</span> {task.postedBy}

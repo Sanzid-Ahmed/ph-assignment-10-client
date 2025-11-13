@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -44,18 +45,17 @@ const AllJobs = () => {
   };
 
   if (loading) {
-    return <p className="text-center mt-10">L<span className="loading loading-spinner loading-xl"></span>ading jobs...</p>;
+    return (
+      <p className="text-center mt-10">
+        L<span className="loading loading-spinner loading-xl"></span>ading
+        jobs...
+      </p>
+    );
   }
 
   return (
     <div className="max-w-6xl mx-auto mt-10">
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
-      />
+      
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">All Jobs ({jobs.length})</h2>
 

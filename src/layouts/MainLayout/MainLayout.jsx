@@ -2,29 +2,34 @@ import React from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../../components/home/Footer/footer";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainLayout = () => {
   return (
     <div>
-        <Toaster
+      <header>
+        <Navbar />
+      </header>
+
+      <main className="w-13/15 my-10 mx-auto">
+        <Outlet />
+      </main>
+
+      <footer>
+        <Footer />
+      </footer>
+
+      <ToastContainer
         position="top-center"
-        toastOptions={{
-          duration: 2000,
-          style: { fontSize: "16px" },
-        }}
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
-      <div>
-        <header>
-          <Navbar></Navbar>
-        </header>
-        <main className="w-13/15 my-10 mx-auto">
-          <Outlet></Outlet>
-        </main>
-        <footer>
-          <Footer></Footer>
-        </footer>
-      </div>
     </div>
   );
 };
