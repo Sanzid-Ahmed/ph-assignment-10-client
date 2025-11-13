@@ -147,10 +147,10 @@ const Navbar = () => {
                 <li className="flex items-center justify-center px-4 py-2 border-t">
                   <label className="toggle text-base-content">
                     <input
-                      onChange={(e) => handleTheme(e.target.checked)}
                       type="checkbox"
-                      value="synthwave"
                       className="theme-controller"
+                      checked={theme === "dark"} // <--- this line fixes the issue
+                      onChange={(e) => handleTheme(e.target.checked)}
                     />
 
                     <svg

@@ -65,11 +65,11 @@ const AddJob = () => {
     }
   };
 
-  if (!user) return <p>Loading user info...</p>;
+  if (!user) return <p>L<span className="loading loading-spinner loading-xl"></span>ading user info...</p>;
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-md mt-10">
-      <h2 className="text-2xl font-bold mb-5 text-center text-gray-700">
+    <div className="max-w-lg mx-auto p-6 rounded-xl shadow-md mt-10">
+      <h2 className="text-2xl font-bold mb-5 text-center text-base-content dark:text-base-100">
         Add New Job
       </h2>
 
@@ -137,7 +137,7 @@ const AddJob = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-[#006666] text-white p-2 rounded hover:bg-blue-700 transition"
         >
           Add Job
         </button>

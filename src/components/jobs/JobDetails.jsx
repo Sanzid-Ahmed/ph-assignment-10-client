@@ -59,7 +59,7 @@ const JobDetails = () => {
     job.acceptedByEmail && job.acceptedByEmail !== currentUserEmail;
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-md mt-8 space-y-4">
+    <div className="max-w-2xl mx-auto p-8 rounded-lg shadow-md mt-8 space-y-4">
       {job.coverImage && (
         <img
           src={job.coverImage}
@@ -87,7 +87,7 @@ const JobDetails = () => {
         {isPoster ? (
           <Link
             to={`/updateJob/${job._id}`}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+            className="bg-[#006666] text-white px-4 py-2 rounded hover:bg-blue-600 transition"
           >
             Update Job
           </Link>

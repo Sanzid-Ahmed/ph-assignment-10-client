@@ -56,8 +56,8 @@ const MyAcceptedTasks = () => {
     return <p className="text-center text-gray-500 mt-10">You haven’t accepted any jobs yet.</p>;
 
   return (
-    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-sm">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-700">
+    <div className="max-w-6xl mx-auto mt-10 p-6 rounded-xl shadow-sm">
+      <h2 className="text-2xl font-bold mb-6 text-center ">
         My Accepted Tasks
       </h2>
 
@@ -65,7 +65,7 @@ const MyAcceptedTasks = () => {
         {tasks.map((task) => (
           <div
             key={task._id}
-            className="bg-gray-50 border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1"
+            className="border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition transform hover:-translate-y-1"
           >
             {task.coverImage && (
               <img
@@ -75,17 +75,17 @@ const MyAcceptedTasks = () => {
               />
             )}
             <div className="p-4">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">{task.title}</h3>
-              <p className="text-gray-600 mb-1">
+              <h3 className="text-xl font-semibold mb-2">{task.title}</h3>
+              <p className=" mb-1">
                 <span className="font-medium">Category:</span> {task.category}
               </p>
-              <p className="text-gray-600 mb-1">
+              <p className="mb-1">
                 <span className="font-medium">Salary:</span> {task.salary || "Negotiable"}
               </p>
-              <p className="text-gray-600 mb-3">
+              <p className=" mb-3">
                 <span className="font-medium">Posted By:</span> {task.postedBy}
               </p>
-              <p className="text-gray-700 text-sm mb-4 line-clamp-3">
+              <p className="text-sm mb-4 line-clamp-3">
                 {task.summary || task.description}
               </p>
 

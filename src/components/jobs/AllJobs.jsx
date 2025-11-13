@@ -54,7 +54,7 @@ const AllJobs = () => {
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
-          className="border rounded px-3 py-1 text-gray-700"
+          className="border rounded px-3 py-1 bg-[#006666] font-bold text-white"
         >
           <option value="desc">Newest First</option>
           <option value="asc">Oldest First</option>
@@ -101,7 +101,7 @@ const AllJobs = () => {
               <div className="mt-auto flex justify-between items-center">
                 <Link
                   to={`/allJobs/${job._id}`}
-                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                  className="bg-[#006666] text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                 >
                   View Details
                 </Link>

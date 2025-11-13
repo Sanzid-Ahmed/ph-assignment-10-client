@@ -90,7 +90,7 @@ const MyAddedJobs = () => {
               <div className="mt-auto flex justify-between items-center">
                 <Link
                   to={`/updateJob/${job._id}`}
-                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                  className="bg-[#006666] text-white px-3 py-1 rounded hover:bg-blue-700 transition"
                 >
                   Edit
                 </Link>
