@@ -1,16 +1,64 @@
-# React + Vite
+# Freelance MarketPlace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Live Site:** [(https://freemarket-5612f.web.app/)]
 
-Currently, two official plugins are available:
+Freelance MarketPlace is a full-stack web application where users can explore, add, update, and manage jobs or tasks. Authenticated users can control their posted jobs, while others can accept available tasks. The project integrates Node.js + Express.js backend, MongoDB Atlas, and Firebase authentication.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **User Authentication:** Login/Register with Firebase & Google Login.  
+- **CRUD Operations:** Users can add, update, delete, and view jobs.  
+- **Accepted Tasks:** Track and manage accepted jobs.  
+- **Dark/Light Theme Toggle:** Switch between dark and light themes across the platform.  
+- **Dynamic Content:** Fetch latest jobs dynamically from MongoDB.  
+- **Responsive Design:** Fully responsive for mobile, tablet, and desktop.  
+- **Toast Notifications:** Success/error messages for all actions (no alerts).  
+- **Private Routes:** Only authenticated users can access job management pages.  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Pages & Routes
+
+- `/` → Home page with banner, dynamic job listings, and top categories.  
+- `/allJobs` → Browse all jobs (table/grid format).  
+- `/allJobs/:id` → View job details and accept tasks.  
+- `/addJob` → Add new jobs (private route).  
+- `/my-added-tasks` → Manage jobs posted by the logged-in user.  
+- `/updateJob/:id` → Update a posted job (private route).  
+- `/my-accepted-tasks` → View and manage accepted jobs (private route).  
+
+---
+
+## Technologies Used
+
+- **Frontend:** React, React Router, TailwindCSS  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB Atlas  
+- **Authentication:** Firebase Auth (Email/Password & Google Login)  
+- **Notifications:** React Toastify  
+- **Other Libraries:** Axios, TanStack Query, Framer Motion  
+
+---
+
+## Design & UI
+
+- Consistent heading styles, spacing, and buttons across the site.  
+- Grid layout for jobs and categories with uniform card sizes.  
+- Fully responsive design with elegant banners and animations.  
+- Unique logo and modern UI inspired by leading freelance marketplaces.  
+
+---
+
+## Installation & Setup
+
+1. Clone the repository:  
+   git clone https://github.com/Sanzid-Ahmed/ph-assignment-10-client.git
+
+2. Install dependencies:
+    npm install
+
+3. Create a .env file with your Firebase keys and MongoDB URI.
+
+4. 
