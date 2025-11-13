@@ -39,7 +39,7 @@ const Banner = () => {
                             ${contentAnimationClasses}`}
             >
                 <h1 className="text-2xl md:text-4xl font-extrabold mb-2 leading-tight text-base-content">
-                    Your <span className="text-primary">Creative</span> Marketplace
+                    Your <span className="text-[#006666]">Creative</span> Marketplace
                 </h1>
 
                 <p className="font-bold mb-10 opacity-95 text-[11px] text-base-content">
@@ -60,7 +60,7 @@ const Banner = () => {
                  
                     <button 
                         className="btn bg-transparent text-base-content font-semibold py-3 px-8 
-                                   border-2 border-current hover:border-primary hover:bg-primary 
+                                   border-2 border-current hover:border-white hover:bg-[#006666] 
                                    hover:text-base-100 rounded-full transition duration-300 
                                    transform hover:scale-105 w-full sm:w-auto"
                     >
