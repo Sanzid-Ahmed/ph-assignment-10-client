@@ -11,6 +11,7 @@ import JobDetails from "../components/jobs/JobDetails";
 import UpdateJob from "../components/jobs/UpdateJob";
 import MyAcceptedTasks from "../components/jobs/MyAcceptedTasks";
 import MyAddedJobs from "../components/jobs/MyAddedJobs";
+import Error404 from "../components/Error404";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "/*",
+    element: <Error404/>,
   },
 ]);
 
