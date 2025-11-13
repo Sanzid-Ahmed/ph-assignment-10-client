@@ -8,7 +8,7 @@ const AllJobs = () => {
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+  const BASE_URL = "https://freemarket-lovat.vercel.app";
   useEffect(() => {
     const fetchJobs = async () => {
       try {

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const UpdateJob = () => {
-  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+  const BASE_URL = "https://freemarket-lovat.vercel.app";
 
   const { id } = useParams();
   const navigate = useNavigate();

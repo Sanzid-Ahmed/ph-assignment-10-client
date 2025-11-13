@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const MyAddedJobs = () => {
-  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+  const BASE_URL = "https://freemarket-lovat.vercel.app";
 
   const { user } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);

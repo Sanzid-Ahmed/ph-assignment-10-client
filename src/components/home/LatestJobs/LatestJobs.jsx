@@ -6,7 +6,7 @@ const LatestJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+  const BASE_URL = "https://freemarket-lovat.vercel.app";
 
   useEffect(() => {
     const fetchLatestJobs = async () => {

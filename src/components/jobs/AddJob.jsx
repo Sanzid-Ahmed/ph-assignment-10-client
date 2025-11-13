@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const AddJob = () => {
-  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+  const BASE_URL = "https://freemarket-lovat.vercel.app";
   const [user, setUser] = useState(null);
 
   useEffect(() => {
