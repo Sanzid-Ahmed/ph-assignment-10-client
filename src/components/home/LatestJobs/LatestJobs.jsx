@@ -6,10 +6,12 @@ const LatestJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+
   useEffect(() => {
     const fetchLatestJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/latestjobs");
+        const response = await axios.get(`${BASE_URL}/latestjobs`);
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching latest jobs:", err);

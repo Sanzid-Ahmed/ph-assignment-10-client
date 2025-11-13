@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const JobDetails = () => {
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
   const { id } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
@@ -17,7 +18,7 @@ const JobDetails = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/alljobs/${id}`);
+        const response = await axios.get(`${BASE_URL}/alljobs/${id}`);
         setJob(response.data);
       } catch (err) {
         console.error("Error fetching job details:", err);
@@ -37,7 +38,7 @@ const JobDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/updatejob/${id}`, {
+      await axios.put(`${BASE_URL}/updatejob/${id}`, {
         acceptedByEmail: currentUserEmail,
       });
       toast.success("✅ Job accepted successfully!");

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const AddJob = () => {
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -41,8 +42,9 @@ const AddJob = () => {
       userEmail: user.email,
     };
 
+
     try {
-      const response = await axios.post("http://localhost:3000/addJob", jobData);
+      const response = await axios.post(`${BASE_URL}/addJob`, jobData);
 
       if (response.status === 201) {
         toast.success("✅ Job added successfully!");

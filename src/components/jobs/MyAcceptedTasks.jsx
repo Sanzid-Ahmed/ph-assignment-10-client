@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const MyAcceptedTasks = () => {
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +18,7 @@ const MyAcceptedTasks = () => {
 
     const fetchTasks = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/my-accepted-tasks/${currentUserEmail}`);
+        const response = await axios.get(`${BASE_URL}/my-accepted-tasks/${currentUserEmail}`);
         setTasks(response.data);
       } catch (err) {
         console.error("Failed to load accepted tasks:", err);
@@ -37,7 +39,7 @@ const MyAcceptedTasks = () => {
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
 
     try {
-      const response = await axios.delete(`http://localhost:3000/deleteJob/${id}`);
+      const response = await axios.delete(`${BASE_URL}/deleteJob/${id}`);
       if (response.status === 200) {
         toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
       } else {

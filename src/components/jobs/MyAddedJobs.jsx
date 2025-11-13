@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const MyAddedJobs = () => {
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
+
   const { user } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const MyAddedJobs = () => {
 
     const fetchJobs = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/my-added-jobs/${user.email}`);
+        const response = await axios.get(`${BASE_URL}/my-added-jobs/${user.email}`);
         setJobs(response.data);
       } catch (err) {
         console.error("Error fetching jobs:", err);
@@ -34,7 +36,7 @@ const MyAddedJobs = () => {
     setJobs(jobs.filter((job) => job._id !== id));
 
     try {
-      const response = await axios.delete(`http://localhost:3000/deletejob/${id}`);
+      const response = await axios.delete(`${BASE_URL}/deletejob/${id}`);
       if (response.status === 200) {
         toast.success("✅ Job deleted successfully!");
       } else {

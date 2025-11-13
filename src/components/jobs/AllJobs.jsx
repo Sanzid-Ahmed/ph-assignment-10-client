@@ -8,10 +8,11 @@ const AllJobs = () => {
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState("desc");
 
+  const BASE_URL = "https://freemarket-pq7ahgzxz-sanzid-ahmeds-projects.vercel.app";
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/allJobs");
+        const response = await axios.get(`${BASE_URL}/allJobs`);
         setJobs(response.data);
       } catch (err) {
         console.error("Failed to fetch jobs:", err);
@@ -33,7 +34,7 @@ const AllJobs = () => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
     try {
-      await axios.delete(`http://localhost:3000/deletejob/${id}`);
+      await axios.delete(`${BASE_URL}/deletejob/${id}`);
       toast.success("✅ Job deleted successfully!");
       setJobs(jobs.filter((job) => job._id !== id));
     } catch (err) {
