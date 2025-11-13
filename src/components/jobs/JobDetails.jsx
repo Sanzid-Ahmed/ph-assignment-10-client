@@ -13,9 +13,8 @@ const JobDetails = () => {
   const currentUser = auth.currentUser;
   const currentUserEmail = currentUser?.email;
 
-
   useEffect(() => {
-    fetch(`http://localhost:3000/allJobs/${id}`)
+    fetch(`http://localhost:3000/alljobs/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setJob(data);
@@ -35,7 +34,7 @@ const JobDetails = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/updateJob/${id}`, {
+      const response = await fetch(`http://localhost:3000/updatejob/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ acceptedByEmail: currentUserEmail }),
@@ -64,31 +63,31 @@ const JobDetails = () => {
     job.acceptedByEmail && job.acceptedByEmail !== currentUserEmail;
 
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-md mt-8">
+    <div className="max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-md mt-8 space-y-4">
       {job.coverImage && (
         <img
           src={job.coverImage}
           alt={job.title}
-          className="w-full h-64 object-cover rounded mb-4"
+          className="w-full h-64 object-cover rounded"
         />
       )}
-      <h2 className="text-3xl font-bold mb-3">{job.title}</h2>
-      <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Category:</span> {job.category}
+      <h2 className="text-3xl font-bold">{job.title}</h2>
+      
+      <p><strong>Category:</strong> {job.category || "N/A"}</p>
+      <p><strong>Posted By:</strong> {job.postedBy || "Anonymous"}</p>
+      <p><strong>Poster Email:</strong> {job.userEmail || "N/A"}</p>
+      <p><strong>Salary:</strong> {job.salary || "Negotiable"}</p>
+      <p><strong>Posted At:</strong> {job.createdAt ? new Date(job.createdAt).toLocaleString() : "N/A"}</p>
+      <p><strong>Accepted By:</strong> {job.acceptedByEmail || "Not accepted yet"}</p>
+      
+      <p className="leading-relaxed">
+        <strong>Summary:</strong> {job.summary || "No summary"}
       </p>
-      <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Posted By:</span> {job.postedBy}
-      </p>
-      <p className="text-gray-700 mb-2">
-        <span className="font-semibold">Salary:</span>{" "}
-        {job.salary || "Negotiable"}
-      </p>
-      <p className="text-gray-700 mb-6 leading-relaxed">
-        <span className="font-semibold">Description:</span>{" "}
-        {job.summary || job.description}
+      <p className="leading-relaxed">
+        <strong>Description:</strong> {job.description || "No description"}
       </p>
 
-      <div className="flex justify-between items-center">
+      <div className="flex flex-wrap justify-between gap-3 mt-4">
         {isPoster ? (
           <Link
             to={`/updateJob/${job._id}`}
@@ -97,7 +96,6 @@ const JobDetails = () => {
             Update Job
           </Link>
         ) : isAcceptedByCurrentUser ? (
-          
           <button
             disabled
             className="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed"
@@ -119,6 +117,7 @@ const JobDetails = () => {
             Accept Job
           </button>
         )}
+
         <Link
           to="/allJobs"
           className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition"
