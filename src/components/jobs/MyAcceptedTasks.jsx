@@ -1,47 +1,47 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const MyAcceptedTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+
   const auth = getAuth();
   const currentUser = auth.currentUser;
   const currentUserEmail = currentUser?.email;
 
-  
   useEffect(() => {
     if (!currentUserEmail) return;
 
-    fetch(`http://localhost:3000/my-accepted-tasks/${currentUserEmail}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/my-accepted-tasks/${currentUserEmail}`);
+        setTasks(response.data);
+      } catch (err) {
         console.error("Failed to load accepted tasks:", err);
+        toast.error("❌ Failed to load your tasks");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchTasks();
   }, [currentUserEmail]);
 
- 
   const handleRemove = async (id, action) => {
     const confirmDelete = window.confirm(`Are you sure you want to ${action} this job?`);
     if (!confirmDelete) return;
 
-    
+    // Optimistic UI update
     setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
 
     try {
-      const response = await fetch(`http://localhost:3000/deleteJob/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        toast.error("❌ Failed to remove from database!");
-      } else {
+      const response = await axios.delete(`http://localhost:3000/deleteJob/${id}`);
+      if (response.status === 200) {
         toast.success(`✅ Job ${action === "cancel" ? "cancelled" : "completed"} successfully!`);
+      } else {
+        toast.error("❌ Failed to remove from database!");
       }
     } catch (err) {
       console.error("Delete error:", err);

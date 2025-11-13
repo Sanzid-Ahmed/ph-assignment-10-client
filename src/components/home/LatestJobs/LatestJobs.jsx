@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios"; // import axios
 
 const LatestJobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/latestjobs")
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchLatestJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/latestjobs");
+        setJobs(response.data); // Axios stores response in data
+      } catch (err) {
         console.error("Error fetching latest jobs:", err);
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchLatestJobs();
   }, []);
 
   if (loading) {
@@ -29,9 +32,7 @@ const LatestJobs = () => {
   return (
     <section className="py-12 bg-gray-50 mt-10">
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-8">
-          Latest Jobs
-        </h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-8">Latest Jobs</h2>
 
         {jobs.length === 0 ? (
           <p className="text-gray-500">No jobs available right now.</p>

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const MyAddedJobs = () => {
   const { user } = useContext(AuthContext);
@@ -11,30 +12,31 @@ const MyAddedJobs = () => {
   useEffect(() => {
     if (!user?.email) return;
 
-    fetch(`http://localhost:3000/my-added-jobs/${user.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/my-added-jobs/${user.email}`);
+        setJobs(response.data);
+      } catch (err) {
         console.error("Error fetching jobs:", err);
-        toast.error("Failed to load your jobs");
+        toast.error("❌ Failed to load your jobs");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchJobs();
   }, [user]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
-    try {
-      const response = await fetch(`http://localhost:3000/deletejob/${id}`, {
-        method: "DELETE",
-      });
+    // Optimistic UI update
+    setJobs(jobs.filter((job) => job._id !== id));
 
-      if (response.ok) {
+    try {
+      const response = await axios.delete(`http://localhost:3000/deletejob/${id}`);
+      if (response.status === 200) {
         toast.success("✅ Job deleted successfully!");
-        setJobs(jobs.filter((job) => job._id !== id));
       } else {
         toast.error("❌ Failed to delete job");
       }

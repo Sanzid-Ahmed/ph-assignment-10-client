@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -14,16 +15,18 @@ const JobDetails = () => {
   const currentUserEmail = currentUser?.email;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/alljobs/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJob(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchJob = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/alljobs/${id}`);
+        setJob(response.data);
+      } catch (err) {
         console.error("Error fetching job details:", err);
+        toast.error("❌ Failed to fetch job details");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchJob();
   }, [id]);
 
   const handleAccept = async () => {
@@ -34,18 +37,11 @@ const JobDetails = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/updatejob/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ acceptedByEmail: currentUserEmail }),
+      await axios.put(`http://localhost:3000/updatejob/${id}`, {
+        acceptedByEmail: currentUserEmail,
       });
-
-      if (response.ok) {
-        toast.success("✅ Job accepted successfully!");
-        navigate("/my-accepted-tasks");
-      } else {
-        toast.error("❌ Failed to accept job.");
-      }
+      toast.success("✅ Job accepted successfully!");
+      navigate("/my-accepted-tasks");
     } catch (err) {
       console.error("Accept job error:", err);
       toast.error("❌ Something went wrong!");

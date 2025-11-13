@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const AddJob = () => {
   const [user, setUser] = useState(null);
@@ -41,13 +42,9 @@ const AddJob = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/addJob", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(jobData),
-      });
+      const response = await axios.post("http://localhost:3000/addJob", jobData);
 
-      if (response.ok) {
+      if (response.status === 201) {
         toast.success("✅ Job added successfully!");
         setJob({
           title: "",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const UpdateJob = () => {
   const { id } = useParams();
@@ -15,16 +16,19 @@ const UpdateJob = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/allJobs/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setJob(data);
-        setLoading(false);
-      })
-      .catch((err) => {
+    const fetchJob = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/allJobs/${id}`);
+        setJob(response.data);
+      } catch (err) {
         console.error("Error fetching job:", err);
+        toast.error("❌ Failed to fetch job data");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+
+    fetchJob();
   }, [id]);
 
   const handleChange = (e) => {
@@ -32,25 +36,21 @@ const UpdateJob = () => {
     setJob({ ...job, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch(`http://localhost:3000/updateJob/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(job),
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/updateJob/${id}`, job);
+      if (response.status === 200) {
         toast.success("✅ Job updated successfully!");
         navigate(`/allJobs/${id}`);
-      })
-      .catch((err) => {
-        console.error("Error updating job:", err);
-        toast.error(err);
-      });
+      } else {
+        toast.error("❌ Failed to update job");
+      }
+    } catch (err) {
+      console.error("Error updating job:", err);
+      toast.error("❌ Something went wrong!");
+    }
   };
 
   if (loading) return <p className="text-center mt-10">Loading job data...</p>;

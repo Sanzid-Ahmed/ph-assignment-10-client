@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const AllJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -8,14 +9,18 @@ const AllJobs = () => {
   const [sortOrder, setSortOrder] = useState("desc");
 
   useEffect(() => {
-    fetch("http://localhost:3000/allJobs")
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/allJobs");
+        setJobs(response.data);
+      } catch (err) {
+        console.error("Failed to fetch jobs:", err);
+        toast.error("❌ Failed to load jobs");
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => console.error("Failed to fetch jobs:", err))
-      .finally(() => setLoading(false));
+      }
+    };
+    fetchJobs();
   }, []);
 
   const sortedJobs = [...jobs].sort((a, b) => {
@@ -28,16 +33,9 @@ const AllJobs = () => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/deletejob/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        toast.success("✅ Job deleted successfully!");
-        setJobs(jobs.filter((job) => job._id !== id));
-      } else {
-        toast.error("❌ Failed to delete job");
-      }
+      await axios.delete(`http://localhost:3000/deletejob/${id}`);
+      toast.success("✅ Job deleted successfully!");
+      setJobs(jobs.filter((job) => job._id !== id));
     } catch (err) {
       console.error("Delete job error:", err);
       toast.error("❌ Something went wrong!");
